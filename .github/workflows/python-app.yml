@@ -1,0 +1,23 @@
+name: Node.js CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Install dependencies
+      run: make install
+    - name: Start the server
+      run: |
+        make run &
+        sleep 10
+    - name: Test server
+      run: curl -I http://localhost:3000
